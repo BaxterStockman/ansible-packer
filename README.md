@@ -1,6 +1,7 @@
 # ansible-packer
 
-An Ansible module for installing [AUR](https://aur.archlinux.org/) packages via the [packer][packer] AUR helper.
+An Ansible module for installing [AUR](https://aur.archlinux.org/) packages via
+the [packer][packer] AUR helper.
 
 This assumes your target node already has packer and its dependecies installed.
 
@@ -13,11 +14,22 @@ This assumes your target node already has packer and its dependecies installed.
 ## Installation
 
 1. Clone this repo
-2. Copy or link the `packer` file into your global Ansible library (usually `/usr/share/ansible`) or into the `./library` folder alongside your top-level playbook
+2. Copy or link the `library/packer` file into your global Ansible library
+   (usually `/usr/share/ansible`) or into the `./library` folder alongside your
+   top-level playbook
+
+Alternatively, add this to your `requirements.yml`:
+
+```yaml
+- src: https://github.com/austinhyde/ansible-packer.git
+  name: packer
+```
 
 ## Usage
 
-Pretty much identical to the [pacman module][pacman-mod]. Note that package status, removal, the corresponding `pacman` commands are used (`-Q`, `-R`, respectively).
+Pretty much identical to the [pacman module][pacman-mod]. Note that package
+status, removal, the corresponding `pacman` commands are used (`-Q`, `-R`,
+respectively).
 
 More detailed docs are on the way, but in general:
 
@@ -45,7 +57,8 @@ More detailed docs are on the way, but in general:
 * Add inline, ansible-doc compatible documentation
 * ???
 
-Have other ideas? Better way of doing something? Open an issue or a pull request.
+Have other ideas? Better way of doing something? Open an issue or a pull
+request.
 
 [packer]: https://github.com/keenerd/packer
 [pacman-mod]: http://docs.ansible.com/pacman_module.html

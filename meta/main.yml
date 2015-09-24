@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: Austin Hyde
+  description: >
+      An Ansible module for installing AUR packages via the packer AUR helper.
+  license: MIT
+  min_ansible_version: 1.2
+categories:
+  - packaging
+dependencies: []
