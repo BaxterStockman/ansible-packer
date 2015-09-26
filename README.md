@@ -21,7 +21,7 @@ This assumes your target node already has packer and its dependecies installed.
 Alternatively, add this to your `requirements.yml`:
 
 ```yaml
-- src: https://github.com/austinhyde/ansible-packer.git
+- src: "https://github.com/austinhyde/ansible-packer.git"
   name: packer
 ```
 
