@@ -1,7 +1,12 @@
 ---
 - hosts: all
   tasks:
-    - name: install j2
+    - name: install python2-j2cli
       packer:
-        name: j2
+        name: python2-j2cli
+        state: present
+
+    - name: install sabnzbd
+      packer:
+        name: sabnzbd
         state: present
