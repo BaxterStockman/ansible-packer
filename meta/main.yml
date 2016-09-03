@@ -1,10 +1,17 @@
 ---
 galaxy_info:
-  author: Austin Hyde
+  author:
+    - Austin Hyde
+    - Matt Schreiber
   description: >
       An Ansible module for installing AUR packages via the packer AUR helper.
   license: MIT
   min_ansible_version: 1.2
-  categories:
+  galaxy_tags:
+    - archlinux
+    - aur
+    - package
     - packaging
+    - packer
+    - pacman
 dependencies: []
