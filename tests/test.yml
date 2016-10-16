@@ -1,12 +1,28 @@
 ---
 - hosts: all
   tasks:
+    - name: badsfasdf
+      packer:
+        state: present
+        upgrade: yes
+- hosts: all
+  tasks:
     - name: install python2-j2cli
       packer:
         name: python2-j2cli
         state: present
-
     - name: install sabnzbd
       packer:
         name: sabnzbd
-        state: present
+        state: latest
+    - name: update zenity
+      packer:
+        name: zenity
+        state: absent
+      ignore_errors: yes
+    - name: dododod
+      packer:
+        name:
+          - sonarr-git
+          - sickrage-git
+          - sabnzbd
