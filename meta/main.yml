@@ -6,7 +6,7 @@ galaxy_info:
   description: >
       An Ansible module for installing AUR packages via the packer AUR helper.
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: '2.0'
   galaxy_tags:
     - archlinux
     - aur
