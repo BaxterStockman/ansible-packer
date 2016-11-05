@@ -273,9 +273,15 @@ class Packer(object):
             if sudo_path is None:
                 self.module.fail_json(msg='unable to locate sudo executable')
 
-            base_cmd = '%s -u %s %s --auronly --noconfirm --noedit' % (sudo_path, login_name, self.packer_path)
+            base_cmd = '%s -u %s %s' % (sudo_path, login_name, self.packer_path)
         else:
-            base_cmd = '%s --auronly --noconfirm --noedit -S' % self.packer_path
+            base_cmd = '%s' % self.packer_path
+
+        base_cmd += ' --auronly --noconfirm --noedit'
+
+        root = self.module.params.get('root')
+        if root:
+          base_cmd += ' --root %s' % root
 
         if self.should_upgrade():
             cmd = '%s -Syu' % base_cmd
@@ -311,8 +317,9 @@ class Packer(object):
 def main():
     module = AnsibleModule(
         argument_spec = dict(
-            name         = dict(aliases=['pkg', 'package'], type='list'),
+            name         = dict(type='list', aliases=['pkg', 'package']),
             state        = dict(default='present', choices=['present', 'installed', 'latest']),
+            root         = dict(required=False, type='str'),
             upgrade      = dict(type='bool'),
             # Here just for compatibility with the 'pacman' module
             force        = dict(default=False, type='bool'),
