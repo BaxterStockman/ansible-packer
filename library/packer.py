@@ -119,13 +119,15 @@ class Packer(object):
     def __init__(self, module):
         self.module = module
 
+        self.root = self.module.params.get('root')
+
         self.packer_path = self.module.get_bin_path('packer')
         if self.packer_path is None:
             self.module.fail_json(msg='unable to find packer executable')
 
-        self.expac_path = self.module.get_bin_path('expac')
-        if self.expac_path is None:
-            self.module.fail_json(msg='unable to find expac executable')
+        self.pacman_path = self.module.get_bin_path('pacman')
+        if self.pacman_path is None:
+            self.module.fail_json(msg='unable to find pacman executable')
 
     def run(self):
         pkgs = self.module.params.get('name', [])
@@ -179,12 +181,18 @@ class Packer(object):
         return self.module.params.get('upgrade', False)
 
     def package_installed_version(self, name):
-        rc, stdout, stderr = self.module.run_command("%s -Q '%%v' %s" % (self.expac_path, name))
+        cmd = '%s -Qs ^%s$' % (self.pacman_path, name)
+        if self.root:
+          cmd += ' --root %s' % self.root
+
+        rc, stdout, stderr = self.module.run_command(cmd)
 
         if rc != 0:
             return None
 
-        return stdout.splitlines()[0].strip()
+        # If the package is found, the version is the second field in the first
+        # line of pacman's output.
+        return stdout.splitlines()[0].split()[1]
 
     def package_info(self, name):
         rc, stdout, stderr = self.module.run_command('%s -Si --auronly %s' % (self.packer_path, name), check_rc=False)
@@ -279,9 +287,8 @@ class Packer(object):
 
         base_cmd += ' --auronly --noconfirm --noedit'
 
-        root = self.module.params.get('root')
-        if root:
-          base_cmd += ' --root %s' % root
+        if self.root:
+          base_cmd += ' --root %s' % self.root
 
         if self.should_upgrade():
             cmd = '%s -Syu' % base_cmd
